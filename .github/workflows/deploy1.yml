@@ -45,8 +45,10 @@ jobs:
 
       # ✅ PLAN
       - name: Terraform Plan
+        working-directory: terraform
         run: terraform plan -var="environment=${{ vars.ENV }}"
 
       # ✅ APPLY
       - name: Terraform Apply
+        working-directory: terraform
         run: terraform apply -auto-approve -var="environment=${{ vars.ENV }}"
