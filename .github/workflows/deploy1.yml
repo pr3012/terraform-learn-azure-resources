@@ -1,0 +1,51 @@
+name: ResourceGroupCreation
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: "Select environment"
+        required: true
+        type: choice
+        options:
+          - dev
+          - prod
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  terraform:
+    runs-on: ubuntu-latest
+    environment: ${{ github.event.inputs.environment }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Azure Login (OIDC)
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+
+      # ✅ INIT (dynamic backend per env)
+      - name: Terraform Init
+        run: |
+          terraform init \
+            -backend-config="resource_group_name=tf-state-rg" \
+            -backend-config="storage_account_name=tfstatestorage12345" \
+            -backend-config="container_name=tfstate" \
+            -backend-config="key=${{ vars.TF_STATE_KEY }}"
+
+      # ✅ PLAN
+      - name: Terraform Plan
+        run: terraform plan -var="environment=${{ vars.ENV }}"
+
+      # ✅ APPLY
+      - name: Terraform Apply
+        run: terraform apply -auto-approve -var="environment=${{ vars.ENV }}"
