@@ -37,9 +37,9 @@ jobs:
       - name: Terraform Init
         run: |
           terraform init \
-            -backend-config="resource_group_name=tf-state-rg" \
-            -backend-config="storage_account_name=tfstatestorage12345" \
-            -backend-config="container_name=tfstate" \
+            -backend-config="resource_group_name=terraformstfs" \
+            -backend-config="storage_account_name=tfbackendpr3012" \
+            -backend-config="container_name=tfbackend" \
             -backend-config="key=${{ vars.TF_STATE_KEY }}"
 
       # ✅ PLAN
