@@ -35,6 +35,7 @@ jobs:
 
       # ✅ INIT (dynamic backend per env)
       - name: Terraform Init
+        working-directory: terraform
         run: |
           terraform init \
             -backend-config="resource_group_name=terraformstfs" \
