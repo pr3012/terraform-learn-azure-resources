@@ -34,6 +34,6 @@ module "vm" {
   admin_username = "azureuser"
   admin_password = var.admin_password
 
-  subnet_id  = module.network.subnet_id
+  subnet_id   = module.network.subnet_id
   environment = var.environment
 }

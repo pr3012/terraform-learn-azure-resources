@@ -2,7 +2,7 @@ variable "name" {}
 variable "location" {}
 
 variable "tags" {
-    default = {}
+  default = {}
 }
 
 variable "prefix" {
