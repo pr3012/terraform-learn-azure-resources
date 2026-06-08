@@ -5,3 +5,4 @@ variable "admin_username" {}
 variable "admin_password" {}
 variable "subnet_id" {}
 variable "environment" {}
+variable "prefix" {}

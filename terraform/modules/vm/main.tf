@@ -1,5 +1,5 @@
 resource "azurerm_network_interface" "nic" {
-  name                = "nic-${var.vm_name}"
+  name                = "nic-${var.prefix}-${var.vm_name}"
   location            = var.location
   resource_group_name = var.resource_group_name
 
@@ -11,7 +11,7 @@ resource "azurerm_network_interface" "nic" {
 }
 
 resource "azurerm_windows_virtual_machine" "vm" {
-  name                = var.vm_name
+  name                = "vm-${var.prefix}-${var.environment}"
   location            = var.location
   resource_group_name = var.resource_group_name
   size                = "Standard_B1s"

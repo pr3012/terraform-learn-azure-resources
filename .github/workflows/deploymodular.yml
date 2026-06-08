@@ -10,6 +10,9 @@ on:
         options:
           - dev
           - prod
+      resource_prefix:
+        description: "Enter resource prefix (your app name)"
+        required: true
 
 permissions:
   id-token: write   # REQUIRED for OIDC
@@ -67,7 +70,9 @@ jobs:
         run: |
           terraform plan \
             -var="environment=${{ vars.ENV }}" \
+            -var="prefix=${{ github.event.inputs.resource_prefix }}" \
             -var="admin_password=${{ secrets.VM_PASSWORD }}"
+            
 
       # ✅ Terraform Apply
       - name: Terraform Apply
@@ -75,4 +80,5 @@ jobs:
         run: |
           terraform apply -auto-approve \
             -var="environment=${{ vars.ENV }}" \
+            -var="prefix=${{ github.event.inputs.resource_prefix }}" \
             -var="admin_password=${{ secrets.VM_PASSWORD }}"
