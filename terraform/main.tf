@@ -6,9 +6,9 @@ provider "azurerm" {
 module "rg" {
   source = "./modules/resource_group"
 
-  name  = "rg-${var.prefix}-${var.environment}"
-  location = "East US"
-  prefix = var.prefix
+  name        = "rg-${var.prefix}-${var.environment}"
+  location    = "East US"
+  prefix      = var.prefix
   environment = var.environment
 }
 
@@ -19,7 +19,7 @@ module "network" {
   resource_group_name = module.rg.name
   location            = module.rg.location
   environment         = var.environment
-  prefix = var.prefix
+  prefix              = var.prefix
 }
 
 # ✅ VM
@@ -35,5 +35,5 @@ module "vm" {
 
   subnet_id   = module.network.subnet_id
   environment = var.environment
-  prefix = var.prefix
+  prefix      = var.prefix
 }
